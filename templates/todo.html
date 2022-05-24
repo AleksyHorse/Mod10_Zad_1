@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <title>Książka</title>
+</head>
+<body>
+    <h2> Zmień: </h2>
+    <form method="POST" action="/library/{{ todo_id }}/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Zmień">
+    </form>
+    <form method="POST" action="/library/del/{{ todo_id }}/">
+        <input type="submit" value="Usuń">
+    </form>
+</body>
+</html>

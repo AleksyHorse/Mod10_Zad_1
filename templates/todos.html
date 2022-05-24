@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <title>Lista zadan</title>
+    <style>
+        table, th, tr, td {border: 1px solid black;}
+    </style>
+</head>
+<body>
+<h2>Lista Zadan</h2>
+<table>
+    <thead>
+    <th>Id</th>
+    <th>Tytuł</th>
+    <th>Opis</th>
+    <th>Zrobione</th>
+    </thead>
+{% for todo in todos %}
+    <tr>
+        <td><a href="/library/{{ todo.id_ }}">{{ todo.id_ }}</a></td>
+        <td>{{ todo.title }}</td>
+        <td>{{ todo.description }}</td>
+        <td>{{ todo.done }}</td>
+    </tr>
+{% endfor %}
+</table>
+<div>
+    <h2> Dodaj nowe zadanie: </h2>
+    <form method="POST" action="/library/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }}{% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Go">
+    </form>
+</div>
+<form method="POST" action="/library/delall/">
+    <input type="submit" value="Usuń Wszystkie">
+</form>
+</body>
+</html>
