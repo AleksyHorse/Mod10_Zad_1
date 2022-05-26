@@ -2,45 +2,6 @@ import json
 
 from SQL_Manage import create_connection, execute_sql
 
-class Todos:
-    def __init__(self):
-        try:
-            with open("todos.json", "r") as f:
-                self.todos = json.load(f)
-        except FileNotFoundError:
-            self.todos = []
-
-    def all(self):
-        return self.todos
-
-    def get(self, id):
-        todo = [todo for todo in self.all() if todo['id'] == id]
-        if todo:
-            return todo[0]
-        return []
-
-    def create(self, data):
-        self.todos.append(data)
-        self.save_all()
-
-    def save_all(self):
-        with open("todos.json", "w") as f:
-            json.dump(self.todos, f)
-
-    def update(self, id, data):
-        todo = self.get(id)
-        data.pop('csrf_token')
-        if todo:
-            index = self.todos.index(todo)
-            data['id']=index+1
-            self.todos[index] = data
-            self.save_all()
-    
-    def delete(self, id):
-        todo = self.get(id)
-        self.todos.remove(todo)
-        self.save_all()
-
 db_file = "todos.db"
 make_table="""CREATE TABLE IF NOT EXISTS todos (
       id_ integer PRIMARY KEY,
